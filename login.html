@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<title>Login | MAFFEI AI STUDIO</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#090b12;color:white;
+ font-family:Arial,sans-serif;min-height:100vh;
+ display:flex;align-items:center;justify-content:center;
+ padding:20px
+}
+.box{
+ width:100%;max-width:390px;background:#151925;
+ border:1px solid #292f40;border-radius:20px;
+ padding:28px
+}
+h1{font-size:21px;letter-spacing:2px;text-align:center}
+p{text-align:center;color:#999eaf;font-size:13px}
+label{display:block;margin:20px 0 8px;font-size:13px}
+input{
+ width:100%;padding:15px;background:#090b12;
+ border:1px solid #34394a;border-radius:10px;
+ color:white;font-size:16px
+}
+button{
+ width:100%;margin-top:24px;padding:15px;
+ background:#8b70e8;color:white;border:0;
+ border-radius:10px;font-weight:bold;font-size:15px
+}
+#msg{color:#ff9696;font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>MAFFEI AI STUDIO</h1>
+<p>ACESSO PRIVADO</p>
+<form id="loginForm">
+<label for="email">E-mail</label>
+<input id="email" type="email" required autocomplete="username">
+<label for="password">Senha</label>
+<input id="password" type="password" required autocomplete="current-password">
+<button type="submit">ENTRAR NO STUDIO</button>
+<p id="msg" role="alert"></p>
+</form>
+</div>
+<script type="module">
+import { login } from './auth.js';
+
+const form = document.getElementById('loginForm');
+const msg = document.getElementById('msg');
+
+form.addEventListener('submit', async (event) => {
+ event.preventDefault();
+ msg.textContent = 'Verificando acesso...';
+ try {
+   await login(
+     document.getElementById('email').value.trim(),
+     document.getElementById('password').value
+   );
+   window.location.href = './index.html';
+ } catch (error) {
+   msg.textContent = 'Não foi possível entrar. Confira seu e-mail e senha.';
+ }
+});
+</script>
+</body>
+</html>
