@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<title>Studio | MAFFEI AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090b12;color:white;font-family:Arial,sans-serif}
+header{padding:22px 18px;border-bottom:1px solid #292f40;display:flex;justify-content:space-between;align-items:center}
+h1{font-size:17px;letter-spacing:1px}
+button{cursor:pointer;border:0;border-radius:9px;padding:12px;background:#8b70e8;color:white;font-weight:bold}
+main{max-width:850px;margin:auto;padding:22px 17px}
+h2{font-size:24px}
+.muted{color:#999eaf;font-size:13px}
+.panel{margin-top:22px;background:#151925;border:1px solid #292f40;border-radius:15px;padding:19px}
+.tool{padding:17px;background:#202637;border-radius:12px;margin-top:12px}
+.tool h3{margin:0 0 8px;font-size:15px}
+.tool p{color:#aeb4c4;font-size:12px;line-height:1.5}
+#logout{background:#292f40;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>MAFFEI AI STUDIO</h1>
+<button id="logout">SAIR</button>
+</header>
+<main>
+<h2>Painel de criação</h2>
+<p class="muted">Bem-vindo ao seu estúdio privado de inteligência artificial.</p>
+
+<section class="panel">
+<h3>Ferramentas disponíveis</h3>
+<div class="tool">
+<h3>🎬 Imagem para vídeo</h3>
+<p>Transforme suas imagens em vídeos com IA.</p>
+</div>
+<div class="tool">
+<h3>👤 Face Swap</h3>
+<p>Troca de rosto em imagens e vídeos com autorização.</p>
+</div>
+<div class="tool">
+<h3>🖼️ Minha galeria</h3>
+<p>Área privada para suas criações.</p>
+</div>
+</section>
+
+<section class="panel">
+<h3>Área de produção</h3>
+<p class="muted">As ferramentas de geração serão conectadas nas próximas etapas.</p>
+</section>
+</main>
+<script type="module">
+import { getSession, logout } from './auth.js';
+
+try {
+ const session = await getSession();
+ if (!session) window.location.replace('./login.html');
+} catch {
+ window.location.replace('./login.html');
+}
+
+document.getElementById('logout').addEventListener('click', async () => {
+ await logout();
+ window.location.replace('./login.html');
+});
+</script>
+</body>
+</html>
