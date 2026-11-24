@@ -12,6 +12,7 @@ body{margin:0;background:#090b12;color:white;font-family:Arial,sans-serif}
 header{padding:22px 18px;border-bottom:1px solid #292f40;display:flex;justify-content:space-between;align-items:center}
 h1{font-size:17px;letter-spacing:1px}
 button{cursor:pointer;border:0;border-radius:9px;padding:12px;background:#8b70e8;color:white;font-weight:bold}
+button:disabled{opacity:.5}
 main{max-width:850px;margin:auto;padding:22px 17px}
 h2{font-size:24px}
 .muted{color:#999eaf;font-size:13px}
@@ -20,9 +21,13 @@ h2{font-size:24px}
 .tool h3{margin:0 0 8px;font-size:15px}
 .tool p{color:#aeb4c4;font-size:12px;line-height:1.5}
 #logout{background:#292f40;font-size:12px}
+#loading{text-align:center;padding:50px;color:#b7a4ff}
 </style>
 </head>
 <body>
+<div id="loading">Verificando acesso...</div>
+
+<div id="app" hidden>
 <header>
 <h1>MAFFEI AI STUDIO</h1>
 <button id="logout">SAIR</button>
@@ -52,19 +57,35 @@ h2{font-size:24px}
 <p class="muted">As ferramentas de geração serão conectadas nas próximas etapas.</p>
 </section>
 </main>
+</div>
+
 <script type="module">
 import { getSession, logout } from './auth.js';
 
+const loading = document.getElementById('loading');
+const app = document.getElementById('app');
+const logoutButton = document.getElementById('logout');
+
 try {
- const session = await getSession();
- if (!session) window.location.replace('./login.html');
-} catch {
- window.location.replace('./login.html');
+  const session = await getSession();
+
+  if (!session) {
+    window.location.replace('./login.html');
+  } else {
+    loading.hidden = true;
+    app.hidden = false;
+  }
+} catch (error) {
+  window.location.replace('./login.html');
 }
 
-document.getElementById('logout').addEventListener('click', async () => {
- await logout();
- window.location.replace('./login.html');
+logoutButton.addEventListener('click', async () => {
+  logoutButton.disabled = true;
+  try {
+    await logout();
+  } finally {
+    window.location.replace('./login.html');
+  }
 });
 </script>
 </body>
