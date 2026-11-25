@@ -1,6 +1,8 @@
+
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "maffei-ai-studio",
+  "main": "./_worker.js",
   "compatibility_date": "2026-11-25",
   "assets": {
     "directory": ".",
